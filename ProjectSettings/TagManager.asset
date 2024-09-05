@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - paus
+  - copas
+  - espada
+  - ouro
+  - PlayerCard
+  - PlayerAI1
+  - PlayerAI2
+  - PlayerAI3
+  - PlayerHuman
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player1Card
+  - Water
+  - UI
+  - Player2Card
+  - Player3Card
+  - Player4Card
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
