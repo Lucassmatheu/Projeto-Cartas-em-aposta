@@ -18,9 +18,15 @@ public class Player : MonoBehaviour
     private Cartas cartaaleatoria;
     private GameObject[] _go;
     private bool isFirstRound = true;  // Variável para controlar se é a primeira rodada
-
+    private Todas_Cartas todasCartas;
+    private HashSet<Cartas> cartasSelecionadas = new HashSet<Cartas>();
     void Start()
     {
+        todasCartas = GameObject.Find("ComboDosJogos").GetComponent<Todas_Cartas>();
+        if (todasCartas == null)
+        {
+            Debug.LogError("Todas_Cartas não encontrado!");
+        }
         mesaManager = GameObject.Find("Mesa").GetComponent<MesaManager>();
         gerenciadorIA = GameObject.FindObjectOfType<GerenciadorIA>();
 
@@ -99,14 +105,33 @@ public class Player : MonoBehaviour
         GameObject cartaPrefab = ObterCartaAleatoria();
         if (cartaPrefab != null)
         {
-            AddCardToHand(cartaPrefab);
+            // Verifica se a carta já está na mão antes de adicionar
+            if (!hand.Contains(cartaPrefab.GetComponent<Cartas>()))
+            {
+                AddCardToHand(cartaPrefab);
+            }
+            else
+            {
+                Debug.LogWarning("A carta já está na mão do jogador.");
+            }
         }
         else
         {
             Debug.LogError("Nenhuma carta foi encontrada para adicionar à mão.");
         }
     }
+    void RemoverCartasDuplicadas()
+    {
+        // Um HashSet para controlar as cartas únicas
+        HashSet<Cartas> cartasUnicas = new HashSet<Cartas>(hand);
+        hand.Clear(); // Limpa a mão
 
+        // Adiciona novamente as cartas únicas
+        foreach (var carta in cartasUnicas)
+        {
+            hand.Add(carta);
+        }
+    }
     GameObject ObterCartaAleatoria()
     {
         cartaaleatoria = GameObject.Find("ComboDosJogos")?.GetComponent<Todas_Cartas>().CartaAleatoria();
@@ -116,6 +141,7 @@ public class Player : MonoBehaviour
             return null;
         }
 
+        // Obtém as cartas do naipe
         _go = GameObject.FindGameObjectsWithTag(cartaaleatoria.naipe.ToString());
         if (_go == null || _go.Length == 0)
         {
@@ -125,13 +151,15 @@ public class Player : MonoBehaviour
 
         foreach (var carta in _go)
         {
-            if (carta.GetComponent<Cartas>().valoresNumeros == cartaaleatoria.valoresNumeros)
+            var cartaComponent = carta.GetComponent<Cartas>();
+            if (!cartasSelecionadas.Contains(cartaComponent) && cartaComponent.valoresNumeros == cartaaleatoria.valoresNumeros)
             {
-                return carta;
+                cartasSelecionadas.Add(cartaComponent); // Marca a carta como selecionada
+                return carta; // Retorna a carta se ainda não foi selecionada
             }
         }
 
-        Debug.LogError("Nenhuma carta correspondente foi encontrada.");
+        Debug.LogError("Nenhuma carta correspondente foi encontrada ou já foi selecionada.");
         return null;
     }
 
@@ -150,8 +178,17 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // Verifica se a carta já está na mão
+        if (hand.Contains(cartaComponent))
+        {
+            Debug.LogWarning("A carta já está na mão do jogador.");
+            return; // Não adiciona a carta se já estiver na mão
+        }
+
+        // Adiciona a carta se não estiver duplicada
         hand.Add(cartaComponent);
 
+        // Configura a posição e o pai da carta
         cartaObj.transform.position = playerHand.position;
         cartaObj.transform.SetParent(playerHand);
 

@@ -484,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 356167435}
-  - component: {fileID: 356167434}
+  - component: {fileID: 356167436}
   m_Layer: 0
   m_Name: PlayerIA1
   m_TagString: Untagged
@@ -492,22 +492,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &356167434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356167433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6d017e90d8fe642897a876769e6e71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: []
-  playerHand: {fileID: 356167435}
-  playerLayerName: 
-  declarationText3D: {fileID: 1358999137}
 --- !u!4 &356167435
 Transform:
   m_ObjectHideFlags: 0
@@ -523,6 +507,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &356167436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356167433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6d017e90d8fe642897a876769e6e71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: []
+  playerHand: {fileID: 356167435}
+  playerLayerName: 
+  declarationText3D: {fileID: 1358999137}
 --- !u!1 &450252512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 706598722}
-  - component: {fileID: 706598721}
+  - component: {fileID: 706598723}
   m_Layer: 0
   m_Name: PlayerIA3
   m_TagString: Untagged
@@ -1016,22 +1016,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &706598721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706598720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c28966a3abd4b43a2eb0a7e3761cd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: []
-  playerHand: {fileID: 706598722}
-  playerLayerName: 
-  declarationText3D: {fileID: 644096321}
 --- !u!4 &706598722
 Transform:
   m_ObjectHideFlags: 0
@@ -1047,6 +1031,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &706598723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706598720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6d017e90d8fe642897a876769e6e71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: []
+  playerHand: {fileID: 706598722}
+  playerLayerName: 
+  declarationText3D: {fileID: 644096321}
 --- !u!1 &718134322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,9 +1076,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f83d0e723859c34e9256a19f8915fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIA1: {fileID: 356167434}
-  playerIA2: {fileID: 2126124378}
-  playerIA3: {fileID: 706598721}
+  playerIA1: {fileID: 356167436}
+  playerIA2: {fileID: 2126124380}
+  playerIA3: {fileID: 706598723}
   jogadorHumano: {fileID: 1201893722}
   declarationManager: {fileID: 1712172321}
 --- !u!4 &718134324
@@ -1336,12 +1336,13 @@ MonoBehaviour:
   - {fileID: 706598720}
   - {fileID: 38024148}
   primeiraRodada: 1
-  deveEsconderCartas: 0
+  deveEsconderCartas: 1
   manilha: 0
   manilha3DText: {fileID: 38024149}
   vencedor3DText: {fileID: 2110006694}
   cartasRestantesText: {fileID: 1915830612}
   primeiraRodadaTerminou: 0
+  manilhaText: {fileID: 38024148}
 --- !u!4 &767724938
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,37 +2136,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1376664546}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1599500251
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1599500252}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1599500252
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599500251}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6594775, y: 1.0918041, z: 0.04825918}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1642397309
 GameObject:
@@ -3025,7 +2995,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2126124379}
-  - component: {fileID: 2126124378}
+  - component: {fileID: 2126124380}
   m_Layer: 0
   m_Name: PlayerIA2
   m_TagString: Untagged
@@ -3033,22 +3003,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2126124378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126124377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f04dcbc8a096141a4cc87491d1b45b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: []
-  playerHand: {fileID: 2126124379}
-  playerLayerName: 
-  declarationText3D: {fileID: 741770020}
 --- !u!4 &2126124379
 Transform:
   m_ObjectHideFlags: 0
@@ -3064,6 +3018,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2126124380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126124377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6d017e90d8fe642897a876769e6e71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: []
+  playerHand: {fileID: 2126124379}
+  playerLayerName: 
+  declarationText3D: {fileID: 741770020}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3089,4 +3059,3 @@ SceneRoots:
   - {fileID: 1021413030}
   - {fileID: 887872470}
   - {fileID: 999920247}
-  - {fileID: 1599500252}

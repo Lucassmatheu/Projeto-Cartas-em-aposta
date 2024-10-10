@@ -20,9 +20,25 @@ public class Todas_Cartas : MonoBehaviour
     public bool primeiraRodadaTerminou = false;
 
     private List<Cartas> cartasNaMesa = new List<Cartas>();
+    private PlayerAI1 pplayerAI1; // Mantenha apenas esta referência
+    public GameObject manilhaText; // Referência para o ManilhaText
+
 
     void Awake()
     {
+        pplayerAI1 = FindObjectOfType<PlayerAI1>();
+        if (pplayerAI1 == null)
+        {
+            Debug.LogError("PlayerAI1 não encontrado na cena!");
+        }
+
+        manilhaText = GameObject.Find("ManilhaText");
+
+        if (manilhaText == null)
+        {
+            Debug.LogError("ManilhaText não encontrado!");
+        }
+
         HashSet<string> cartasAdicionadas = new HashSet<string>();
         naipes[] todosNaipes = (naipes[])Enum.GetValues(typeof(naipes));
         valoresNumeros[] todosValores = (valoresNumeros[])Enum.GetValues(typeof(valoresNumeros));
@@ -69,10 +85,11 @@ public class Todas_Cartas : MonoBehaviour
     public Cartas CartaAleatoria()
     {
         int indexAleatorio = UnityEngine.Random.Range(0, todascartas.Count);
-        Cartas carta = todascartas[indexAleatorio];
-        todascartas.RemoveAt(indexAleatorio); // Remover a carta da lista
-        AtualizarTextoCartasRestantes(); // Atualizar o texto das cartas restantes
-        return carta;
+    Cartas carta = todascartas[indexAleatorio];
+    todascartas.RemoveAt(indexAleatorio); // Remover a carta da lista
+    Debug.Log("Carta removida: " + carta.valoresNumeros + " de " + carta.naipe);
+    AtualizarTextoCartasRestantes(); // Atualizar o texto das cartas restantes
+    return carta;
     }
 
     public void PrimeraMao()
@@ -80,24 +97,24 @@ public class Todas_Cartas : MonoBehaviour
         for (int i = 0; i < Players.Length; i++)
         {
             GameObject player = Players[i];
-            Cartas carta = CartaAleatoria();
+            Cartas carta = CartaAleatoria(); // Retira a carta da lista
 
-            // Instanciar a carta para o jogador
-            GameObject cartaObj = Instantiate(CartasPrefab);
-            cartaObj.GetComponent<Cartas>().naipe = carta.naipe;
-            cartaObj.GetComponent<Cartas>().valoresNumeros = carta.valoresNumeros;
-
-            // Posicionar e associar a carta ao jogador
-            cartaObj.transform.position = player.transform.position;
-            cartaObj.transform.SetParent(player.transform);
+            // Mova a carta retirada para a posição do jogador
+            carta.transform.position = player.transform.position; // Define a posição da carta
+            carta.transform.SetParent(player.transform); // Define o pai da carta como o jogador
 
             // Adicionar a carta à mão do jogador
-            player.GetComponent<Player>().hand.Add(carta);
+            var playerAI = player.GetComponent<PlayerAI1>();
+            if (playerAI != null)
+            {
+                playerAI.hand.Add(carta);
+            }
         }
 
-        // Revelar a manilha apenas uma vez após a distribuição das cartas
         RevelarManilha();
     }
+
+
 
 
     public void RevelarManilha()
@@ -212,14 +229,20 @@ public class Todas_Cartas : MonoBehaviour
     {
         foreach (var player in Players)
         {
-            var playerHand = player.GetComponent<Player>().hand;
-            if (playerHand.Contains(cartaVencedora))
+            // Atualizado para pegar o componente correto
+            var playerComponent = player.GetComponent<Player>();
+            if (playerComponent != null)
             {
-                return player.GetComponent<Player>();
+                var playerHand = player.GetComponent<PlayerAI1>().hand;
+                if (playerHand.Contains(cartaVencedora))
+                {
+                    return playerComponent; // Retorna o jogador que venceu
+                }
             }
         }
         return null;
     }
+
 
     public void MostrarDeclaracoesVencedorPerdedor(Player vencedor)
     {

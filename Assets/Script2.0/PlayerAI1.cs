@@ -5,10 +5,13 @@ using TMPro;
 
 public class PlayerAI1 : PlayerAIBase
 {
+    private Player player;
+   
     protected override void Start()
     {
         base.Start();
         playerLayerName = "Player2Card"; // Defina o nome da camada específica para PlayerAI1
+        player = GetComponent<Player>();
         AdicionarCartaInicial();
         Debug.Log("PlayerAI1 Start - Carta inicial adicionada.");
     }
@@ -20,32 +23,31 @@ public class PlayerAI1 : PlayerAIBase
         Debug.Log("PlayerAI1 AdicionarCartaInicial - Carta inicial adicionada à mão.");
     }
 
+
     protected GameObject ObterCartaAleatoria()
     {
         var todasCartas = GameObject.Find("ComboDosJogos").GetComponent<Todas_Cartas>();
         var cartaAleatoria = todasCartas.CartaAleatoria();
-        var cartas = GameObject.FindGameObjectsWithTag(cartaAleatoria.naipe.ToString());
-        foreach (var go in cartas)
-        {
-            if (go.GetComponent<Cartas>().valoresNumeros == cartaAleatoria.valoresNumeros)
-            {
-                return go;
-            }
-        }
-        return null;
+        return cartaAleatoria.gameObject; // Retorna diretamente a instância da carta
     }
 
     protected void AddCardToHand(GameObject cartaObj)
     {
-        hand.Add(cartaObj.GetComponent<Cartas>());
+        if (hand.Count < 1) // Certifica-se de que apenas uma carta pode ser adicionada
+        {
+            hand.Add(cartaObj.GetComponent<Cartas>());
+            cartaObj.transform.position = playerHand.position;
+            cartaObj.transform.SetParent(playerHand);
 
-        cartaObj.transform.position = playerHand.position;
-        cartaObj.transform.SetParent(playerHand);
+            int playerLayer = LayerMask.NameToLayer(playerLayerName);
+            SetLayerRecursively(cartaObj, playerLayer);
 
-        int playerLayer = LayerMask.NameToLayer(playerLayerName);
-        SetLayerRecursively(cartaObj, playerLayer);
-
-        Debug.Log("PlayerAI1 AddCardToHand - Uma carta foi adicionada à mão do jogador. Agora o jogador tem " + hand.Count + " cartas na mão.");
+            Debug.Log("PlayerAI1 AddCardToHand - Uma carta foi adicionada à mão do jogador. Agora o jogador tem " + hand.Count + " cartas na mão.");
+        }
+        else
+        {
+            Debug.LogWarning("PlayerAI1 AddCardToHand - Tentativa de adicionar mais de uma carta à mão.");
+        }
     }
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
