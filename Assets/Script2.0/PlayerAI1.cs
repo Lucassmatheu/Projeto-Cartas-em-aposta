@@ -6,20 +6,34 @@ using TMPro;
 public class PlayerAI1 : PlayerAIBase
 {
     private Player player;
-   
+    private Todas_Cartas mesaManager; // Supondo que Todas_Cartas gerencia a mesa
+    private void AlgumaFuncao()
+    {
+        Cartas cartaAtual = hand[0]; 
+        int forcaDaCarta = mesaManager.CalcularForcaDaCarta(cartaAtual);
+        // Usar a força da carta como necessário...
+    }
     protected override void Start()
     {
+        mesaManager = FindObjectOfType<Todas_Cartas>();
+        if (mesaManager == null)
+        {
+            Debug.LogError("MesaManager não encontrado na cena.");
+        }
+        Debug.Log("PlayerAI1 Start - Chamado");
         base.Start();
-        playerLayerName = "Player2Card"; // Defina o nome da camada específica para PlayerAI1
+        playerLayerName = "Player2Card";
         player = GetComponent<Player>();
-        AdicionarCartaInicial();
+       // AdicionarCartaInicial();
         Debug.Log("PlayerAI1 Start - Carta inicial adicionada.");
     }
 
     protected void AdicionarCartaInicial()
     {
         GameObject cartaPrefab = ObterCartaAleatoria();
-        AddCardToHand(cartaPrefab);
+        Debug.Log("AdicionarCartaInicial - Quantidade de cartas antes: " + hand.Count);
+       // AddCardToHand(cartaPrefab);
+        Debug.Log("AdicionarCartaInicial - Quantidade de cartas depois: " + hand.Count);
         Debug.Log("PlayerAI1 AdicionarCartaInicial - Carta inicial adicionada à mão.");
     }
 
@@ -31,24 +45,24 @@ public class PlayerAI1 : PlayerAIBase
         return cartaAleatoria.gameObject; // Retorna diretamente a instância da carta
     }
 
-    protected void AddCardToHand(GameObject cartaObj)
-    {
-        if (hand.Count < 1) // Certifica-se de que apenas uma carta pode ser adicionada
-        {
-            hand.Add(cartaObj.GetComponent<Cartas>());
-            cartaObj.transform.position = playerHand.position;
-            cartaObj.transform.SetParent(playerHand);
+    //protected void AddCardToHand(GameObject cartaObj)
+    //{
+    //    if (hand.Count < 1) // Certifica-se de que apenas uma carta pode ser adicionada
+    //    {
+    //        hand.Add(cartaObj.GetComponent<Cartas>());
+    //        cartaObj.transform.position = playerHand.position;
+    //        cartaObj.transform.SetParent(playerHand);
 
-            int playerLayer = LayerMask.NameToLayer(playerLayerName);
-            SetLayerRecursively(cartaObj, playerLayer);
+    //        int playerLayer = LayerMask.NameToLayer(playerLayerName);
+    //        SetLayerRecursively(cartaObj, playerLayer);
 
-            Debug.Log("PlayerAI1 AddCardToHand - Uma carta foi adicionada à mão do jogador. Agora o jogador tem " + hand.Count + " cartas na mão.");
-        }
-        else
-        {
-            Debug.LogWarning("PlayerAI1 AddCardToHand - Tentativa de adicionar mais de uma carta à mão.");
-        }
-    }
+    //        Debug.Log("PlayerAI1 AddCardToHand - Uma carta foi adicionada à mão do jogador. Agora o jogador tem " + hand.Count + " cartas na mão.");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("PlayerAI1 AddCardToHand - Tentativa de adicionar mais de uma carta à mão.");
+    //    }
+    //}
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {

@@ -86,4 +86,25 @@ public class Cartas : MonoBehaviour
           
         }
     }
+    public int pontuacao = 0;
+    public void CalcularPontuacao(bool jogadorDeclarouGanhou, bool jogadorGanhou)
+    {
+        if (jogadorDeclarouGanhou && jogadorGanhou)
+        {
+            pontuacao += 1; // Ganhou e declarou que ganharia
+        }
+        else if (jogadorDeclarouGanhou && !jogadorGanhou)
+        {
+            pontuacao -= 1; // Declarou que ganharia, mas perdeu
+        }
+        else if (!jogadorDeclarouGanhou && jogadorGanhou)
+        {
+            pontuacao -= 1; // Declarou que perderia, mas ganhou
+        }
+        // Caso o jogador tenha declarado que perdeu e realmente perdeu, não muda a pontuação
+    }
+
+
 }
+
+
